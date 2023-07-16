@@ -96,7 +96,7 @@ end
 
 function STRIP_BACK:createNewRect(w, h, x, y)
 
-    -- up-left to down-right; clockwise
+    -- down-left to up-right; counterclockwise
     local rect = {
         [1] = Vector(x, y),
         [2] = Vector(x + w, y),
