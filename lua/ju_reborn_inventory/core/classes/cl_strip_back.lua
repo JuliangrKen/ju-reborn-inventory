@@ -20,11 +20,12 @@ STRIP_BACK.__index = self
 
 function STRIP_BACK:new(numStripes)
     
+    local heir = setmetatable({}, self)
+
     heir.__index = self
+    heir.numStripes = numStripes
 
-    self.numStripes = numStripes
-
-    return self
+    return heir
 
 end
 
@@ -70,7 +71,7 @@ function STRIP_BACK:Rotate(angle)
 end
 
 --[[
-    return table : { { [1] = num, [2] = num, [3] = num, [4] = num }, etc }
+    return table : { { [1] = Vector, ect }, etc }
 ]]
 function STRIP_BACK:Build()
 
@@ -84,6 +85,29 @@ function STRIP_BACK:Build()
         
         rects[i] = self:createNewRect(w, h, nextX, nextY)
         nextY = nextY + (self.stripesInterval or dStripesInterval) + h
+
+    end
+
+    return rects
+
+end
+
+--[[
+    return table : { { [1] = { x = num, y = num }, ect }, etc }
+]]
+function STRIP_BACK:BuildXY()
+    
+    local rects = {}
+
+    for k, v in ipairs(self:Build()) do
+        
+        rects[k] = {}
+
+        for k1, v1 in ipairs(self:Build()) do
+
+            rects[k][k1] = { x = v1.x, y = v1.y }
+
+        end
 
     end
 
