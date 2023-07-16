@@ -14,7 +14,7 @@ local dStripesInterval = 10
 
 local STRIP_BACK = {}
 
-STRIP_BACK.__index = self
+STRIP_BACK.__index = STRIP_BACK
 
 -- public methods:
 
