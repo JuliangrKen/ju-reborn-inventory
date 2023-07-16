@@ -119,8 +119,8 @@ end
 
 function STRIP_BACK:calcRectSizes()
 
-    local hAll = (self.h or dH) - (self.stripesInterval or dStripesInterval) * (#self.numStripes - 1)
-    return self.w or dW, hAll / #self.numStripes
+    local hAll = (self.h or dH) - (self.stripesInterval or dStripesInterval) * (self.numStripes - 1)
+    return self.w or dW, hAll / self.numStripes
     
 end
 
