@@ -44,6 +44,8 @@ local addDir = function(name)
     end
 end
 
+addDir 'utils'
+
 addFile 'cfg.lua'
 addFile 'db.lua'
 
