@@ -49,6 +49,7 @@ addDir 'utils'
 addFile 'cfg.lua'
 addFile 'db.lua'
 
+addDir 'core/classes'
 addDir 'core'
 addDir 'derma'
 
