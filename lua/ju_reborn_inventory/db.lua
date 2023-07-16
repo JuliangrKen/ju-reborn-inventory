@@ -1,0 +1,2 @@
+
+print 'db_init'
