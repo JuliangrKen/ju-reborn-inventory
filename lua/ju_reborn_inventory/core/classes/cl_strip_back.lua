@@ -1,4 +1,10 @@
 
+local math = math
+
+local sin = math.sin
+local cos = math.cos
+local pi = math.pi
+
 -- local default values:
 
 local dW, dH = 100, 100
