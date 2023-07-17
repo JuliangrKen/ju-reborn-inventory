@@ -5,6 +5,7 @@ ju = ju or {}
 ju.reborn_inventory = ju.reborn_inventory or {}
 ju.reborn_inventory.cfg = ju.reborn_inventory.cfg or {}
 ju.reborn_inventory.db = ju.reborn_inventory.db or {}
+ju.reborn_inventory.classes = ju.reborn_inventory.classes or {}
 
 -- include functions:
 
