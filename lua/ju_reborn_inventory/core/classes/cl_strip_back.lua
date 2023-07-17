@@ -3,6 +3,7 @@ local math = math
 
 local sin = math.sin
 local cos = math.cos
+local atan = math.atan
 local pi = math.pi
 
 -- local default values:
@@ -59,12 +60,20 @@ end
     angle : num
     return this table
 ]]
-function STRIP_BACK:Rotate(angle)
+function STRIP_BACK:SetRotate(angle)
 
-    self.matrix = self.matrix or Matrix()
+    if angle < 0 or angle > 90 then
+        error 'is no correct angle'
+    end
 
-    local turn = 2 * pi * angle / 360
-    self.matrix:Rotate(Vector(sin(turn), cos(turn), 0):Angle())
+    self.angle = angle
+
+    self.matrix = Matrix()
+
+    self.matrix:Rotate(Angle(0, angle))
+    self.matrix:Invert() -- особенности UI
+
+    self:calcRotSizes()
 
     return self
 
@@ -81,7 +90,7 @@ function STRIP_BACK:Build()
 
     local nextX, nextY = 0, 0
 
-    for i = 1, self.numStripes, -1 do
+    for i = 1, self.numStripes, 1 do
         
         rects[i] = self:createNewRect(w, h, nextX, nextY)
         nextY = nextY + (self.stripesInterval or dStripesInterval) + h
@@ -103,7 +112,7 @@ function STRIP_BACK:BuildXY()
         
         rects[k] = {}
 
-        for k1, v1 in ipairs(self:Build()) do
+        for k1, v1 in ipairs(v) do
 
             rects[k][k1] = { x = v1.x, y = v1.y }
 
@@ -145,6 +154,36 @@ function STRIP_BACK:createNewRect(w, h, x, y)
     end
 
     return rect
+
+end
+
+function STRIP_BACK:calcRotSizes()
+
+    local w, h = self.w, self.h
+
+    local d = (w * w + h * h) ^ .5
+
+    -- step 1
+
+    local alpha = self.angle
+    local beta = atan(h / w) / pi * 180
+
+    local a = h
+    local b = a / sin(angToRad(alpha + beta))
+
+    local k = d / b
+    local as = a * k
+
+    self.h = as
+
+    -- step 2
+
+    local add = cos(90 - alpha) * h
+    self.w = w + add
+
+    -- step 3
+    -- local x, y = - cos(alpha) * add, - sin(alpha) * add
+    -- self.matrix:Translate(Vector(x, y))
 
 end
 
