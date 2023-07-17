@@ -17,12 +17,12 @@ end
 
 concommand.Add('ju_cell_ui', function(ply, cmd, args, argStr)
     
-    print(argStr)
+    if ju.reborn_inventory.debugPanel then
 
-    if debugPanel then
+        print(ju.reborn_inventory.debugPanel:GetClassName() .. ' was removed!')
 
-        debugPanel:Remove()
-        debugPanel = nil
+        ju.reborn_inventory.debugPanel:Remove()
+        ju.reborn_inventory.debugPanel = nil
 
     end
 
@@ -35,8 +35,8 @@ concommand.Add('ju_cell_ui', function(ply, cmd, args, argStr)
     end
 
     pcall(function()
-        debugPanel = vgui.Create(argStr)
-        debugPanel:Center()
+        ju.reborn_inventory.debugPanel = vgui.Create(argStr)
+        ju.reborn_inventory.debugPanel:Center()
     end)
 
 end, function(arguments) return uiListAuto end)
