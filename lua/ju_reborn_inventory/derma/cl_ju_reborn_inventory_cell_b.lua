@@ -5,7 +5,6 @@ local background = ColorAlpha(cfg.inventory_cell_dark_grey, 255 * .34) -- 34%
 
 DEFINE_BASECLASS 'Panel'
 
-
 local PANEL = {}
 
 AccessorFunc(PANEL, 'itemID', 'ItemID')
