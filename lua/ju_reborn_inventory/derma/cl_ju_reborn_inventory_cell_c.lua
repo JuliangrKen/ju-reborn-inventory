@@ -19,8 +19,8 @@ local stripesInterval = cfg.inventory_cell_stripes_interval
 
 -- colors
 
-local strokeColor = ColorAlpha(cfg.inventory_cell_c_main_color, 255 * .6) -- 60%
-local stripeColor = ColorAlpha(cfg.inventory_cell_c_main_color, 255 * 0.3)-- .06) -- 6%
+local strokeColor = ColorAlpha(cfg.inventory_cell_blue, 255 * .6) -- 60%
+local stripeColor = ColorAlpha(cfg.inventory_cell_blue, 255 * 0.3)-- .06) -- 6%
 
 DEFINE_BASECLASS 'Panel'
 
