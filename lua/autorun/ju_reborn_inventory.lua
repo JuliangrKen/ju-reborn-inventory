@@ -55,5 +55,11 @@ addDir 'core/classes'
 addDir 'core'
 addDir 'derma'
 
+-- degug mode
+
+if ju.reborn_inventory.cfg.debug then
+    addDir 'debug'
+end
+
 -- Hello msg:
 MsgC(Color(134, 156, 223), "\n~~~\tJuliandrKen (jujaken) Reborn Inventory was loaded. I'm hokaga!\t~~~\n")

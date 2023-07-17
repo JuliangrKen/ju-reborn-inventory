@@ -1,11 +1,13 @@
 local cfg = ju.reborn_inventory.cfg
 
+cfg.debug = true
+
 if SERVER then
     
     
 
 else
-
+    
     -- [common]
 
     cfg.inventory_cell_blue = fromHex '#88EECC'
@@ -13,7 +15,9 @@ else
     cfg.inventory_cell_orange = fromHex '#FF7A00'
     cfg.inventory_cell_white = fromHex '#FFFFFF'
     cfg.inventory_cell_light_grey = fromHex '#CECECE'
-    cfg.inventory_cell_dark_grey fromHex '#040404'
+    cfg.inventory_cell_dark_grey = fromHex '#040404'
+
+    cfg.inventory_cell_background = fromHex '#053144'
 
     -- [c-menu] 
     
@@ -26,6 +30,9 @@ else
     -- [backpack menu]
 
     cfg.inventory_cell_b_size = 88
+    cfg.inventory_cell_b_line_lenght = 60
+    cfg.inventory_cell_b_fence = 16
+
     cfg.inventory_backpack_w_view = 6
     cfg.inventory_backpack_h_view = 5
 
