@@ -7,7 +7,7 @@ function PANEL:Init()
 
 end
 
-function PANE:Paint(arguments)
+function PANEL:Paint(arguments)
     
 end
 
