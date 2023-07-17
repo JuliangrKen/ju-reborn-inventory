@@ -41,8 +41,6 @@ end
 
 function PANEL:Paint(h, w)
     
-    local s = h - 1 -- чтобы влезли линии слева и снизу
-
     -- strip back
     surface.SetDrawColor(stripeColor)
 	draw.NoTexture()
@@ -55,26 +53,8 @@ function PANEL:Paint(h, w)
 
     -- stroke:
 
-    surface.SetDrawColor(strokeColor)
-	draw.NoTexture()
-
-    surface.DrawLine(0, 0, 0, s)
-    surface.DrawLine(0, 0, s, 0)
-    surface.DrawLine(s, s, 0, s)
-    surface.DrawLine(s, s, s, 0)
+    draw.LineRect(0, 0, h, h, strokeColor)
 
 end
 
 vgui.Register('juRebornInventoryCell_C', PANEL, 'Panel')
-
-concommand.Add('ju_cell_test', function()
-
-    if (juRebornInventoryCell_C) then
-        juRebornInventoryCell_C:Remove()
-        juRebornInventoryCell_C = nil
-    end
-
-    juRebornInventoryCell_C = vgui.Create 'juRebornInventoryCell_C'
-    juRebornInventoryCell_C:Center()
-
-end)
