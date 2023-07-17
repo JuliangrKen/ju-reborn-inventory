@@ -47,8 +47,9 @@ end
 
 addDir 'utils'
 
-addFile 'cfg.lua'
 addFile 'db.lua'
+addFile 'cfg.lua'
+addFile 'fonts.lua'
 
 addDir 'core/classes'
 addDir 'core'
