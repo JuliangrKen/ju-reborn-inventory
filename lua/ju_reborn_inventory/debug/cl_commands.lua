@@ -34,10 +34,8 @@ concommand.Add('ju_cell_ui', function(ply, cmd, args, argStr)
         argStr = panelPrefix .. argStr 
     end
 
-    pcall(function()
-        ju.reborn_inventory.debugPanel = vgui.Create(argStr)
-        ju.reborn_inventory.debugPanel:Center()
-    end)
+    ju.reborn_inventory.debugPanel = vgui.Create(argStr)
+    ju.reborn_inventory.debugPanel:Center()
 
 end, function(arguments) return uiListAuto end)
 
