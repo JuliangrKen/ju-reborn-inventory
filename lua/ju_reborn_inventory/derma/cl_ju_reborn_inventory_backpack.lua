@@ -33,6 +33,43 @@ function PANEL:Init()
     self.cellsPanel:SetPos((w - wC) / 2, (h - hC + headerZone) / 2)
 
     self.cellsPanel.verticalScr = vgui.Create('DScrollPanel', self.cellsPanel)
+    self.cellsPanel.verticalScr:Dock(FILL)
+    self.cellsPanel.verticalScr:SetPadding(padding)
+    self.cellsPanel.verticalScr.HorizontalScrs = {}
+
+    local horScrs = self.cellsPanel.verticalScr.HorizontalScrs
+    local nextId = 1
+
+    self.cells = {}
+    
+    for i = 1, hView, 1 do
+        
+        local horScr = vgui.Create('DHorizontalScroller', self.cellsPanel.verticalScr)
+        horScr:Dock(TOP)
+        horScr:SetHeight(cellSize)
+        horScr:DockMargin(0, 0, 0, padding)
+        horScr:SetOverlap(- padding)
+        horScr.cells = {}
+
+        self.cellsPanel.verticalScr:AddItem(horScr)
+
+        horScrs[i] = horScr
+
+        for j = 1, wView, 1 do
+        
+            local cell = vgui.Create('juRebornInventoryCell_B', horScrs[i])
+            cell:SetItemID(nextId)
+
+            horScr:AddPanel(cell)
+
+            horScr.cells[j] = cell
+            self.cells[nextId] = cell
+            
+            nextId = nextId + 1
+
+        end
+
+    end
 
 end
 
@@ -65,20 +102,6 @@ function PANEL:Paint(w, h)
     draw.SimpleText(cfg.inventory_backpack_title_2, 'juRebornInventoryTitle2', ex, sy - fence, cfg.inventory_cell_orange, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
 
     draw.LineRect(sx, sy, ex, ey, cfg.inventory_cell_orange)
-
-    -- TODO: переделать логику положения
-
-    -- local w1, h1 = self.cellsPanel:GetSize()
-    -- local x, y = w / 2 - w1, h / 2 - h1
-
-    -- local f = cfg.inventory_cell_b_fence
-    
-    -- local sx, sy = x - f, y - f
-    -- local ex, ey = x + f + w1, y + f + h1
-
-
-
-    -- draw.LineRect(sx, sy, ex, ey, cfg.inventory_cell_orange)
 
 end
 
