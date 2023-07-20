@@ -1,5 +1,7 @@
 
-DEFINE_BASECLASS 'DButton'
+local cfg = ju.reborn_inventory.cfg
+
+DEFINE_BASECLASS 'Panel'
 
 local PANEL = {}
 
@@ -10,7 +12,9 @@ function PANEL:Init()
 
 end
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
+
+    draw.SimpleText(tostring(self.itemID or -1), 'juRebornInventoryTitle2', w / 2, h / 2, cfg.inventory_cell_light_grey, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     if !itemID then
     
@@ -32,4 +36,4 @@ function PANEL:SetItemID(id)
     
 end
 
-vgui.Register('juRebornInventoryCellIcon', PANEL, 'DButton')
+vgui.Register('juRebornInventoryCellIcon', PANEL, 'Panel')

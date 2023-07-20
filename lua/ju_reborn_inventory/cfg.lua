@@ -47,6 +47,10 @@ else
     cfg.inventory_backpack_w_view = 6
     cfg.inventory_backpack_h_view = 5
 
+    cfg.inventory_backpack_cells_padding = 8
+
+    cfg.inventory_backpack_header_zone = 79
+
     cfg.inventory_backpack_title_1 = 'Ваш инвентарь'
     cfg.inventory_backpack_title_2 = 'ВАШ РЮКЗАК'
 
