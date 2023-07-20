@@ -2,8 +2,8 @@
 local db = ju.reborn_inventory.db
 
 db.module = 'mysqloo'
-db.host = ''
-db.username = ''
+db.host = 'localhost'
+db.username = 'root'
 db.password = ''
-db.database = ''
+db.database = 'reborn_dev'
 db.port = 3306
