@@ -1,7 +1,7 @@
 
 local cfg = ju.reborn_inventory.cfg
 
-local entityMeta = FindMetaTable 'Enity'
+local entityMeta = FindMetaTable 'Entity'
 
 if SERVER then
 
