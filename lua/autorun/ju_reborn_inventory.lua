@@ -53,9 +53,9 @@ addFile 'cfg.lua'
 addFile 'resources.lua'
 addFile 'fonts.lua'
 
-addSv 'db.lua'
-addSv 'db/sv_init.lua'
-addFile 'db/sh_functions.lua'
+-- addSv 'db.lua'
+-- addSv 'db/sv_init.lua'
+-- addFile 'db/sh_functions.lua'
 
 addDir 'core/classes'
 addDir 'core'
