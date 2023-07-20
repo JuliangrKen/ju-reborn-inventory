@@ -4,6 +4,12 @@ cfg.debug = true
 
 if SERVER then
     
+    -- [privileges]
+    cfg.highPrivileges = {
+        'owner',
+    }
+
+    -- [functions]
     
 
 else
@@ -44,5 +50,15 @@ else
     cfg.inventory_backpack_divide = 'Разделить'
 
     cfg.inventory_backpack_kilogram = 'кг'
+
+    -- [functions]
+
+    cfg.notification_error = function(text)
+        
+    end
+    
+    cfg.notification_success = function(text)
+        
+    end
 
 end
