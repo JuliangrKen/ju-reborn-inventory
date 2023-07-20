@@ -3,6 +3,11 @@ local cfg = ju.reborn_inventory.cfg
 cfg.debug = true
 
 if SERVER then
+
+    -- [items]
+    cfg.entityItems = {
+        '',
+    }
     
     -- [privileges]
     cfg.highPrivileges = {
