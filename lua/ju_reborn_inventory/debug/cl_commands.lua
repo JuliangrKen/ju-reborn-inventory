@@ -21,7 +21,11 @@ concommand.Add(testUICommandName, function(ply, cmd, args, argStr)
     
     if ju.reborn_inventory.debugPanel then
 
-        print(ju.reborn_inventory.debugPanel:GetClassName() .. ' was removed!')
+        if ju.reborn_inventory.debugPanel.GetClassName then
+
+            print(ju.reborn_inventory.debugPanel:GetClassName() .. ' was removed!')
+            
+        end
 
         ju.reborn_inventory.debugPanel:Remove()
         ju.reborn_inventory.debugPanel = nil
