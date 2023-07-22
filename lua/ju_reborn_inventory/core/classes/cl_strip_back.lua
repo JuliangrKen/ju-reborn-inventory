@@ -18,6 +18,10 @@ local STRIP_BACK = {}
 STRIP_BACK.__index = STRIP_BACK
 
 -- public methods:
+AccessorFunc(STRIP_BACK, 'w', 'W')
+AccessorFunc(STRIP_BACK, 'h', 'H')
+AccessorFunc(STRIP_BACK, 'stripesInterval', 'StripesInterval')
+AccessorFunc(STRIP_BACK, 'angle', 'Angle')
 
 function STRIP_BACK:new(numStripes)
     
@@ -38,11 +42,17 @@ end
 ]]
 function STRIP_BACK:SetSize(w, h)
 
-    self.w = w
-    self.h = h
+    self:SetW(w)
+    self:SetH(h)
 
     return self
     
+end
+
+function STRIP_BACK:GetSize()
+    
+    return self.w or dW, self.h or dH
+
 end
 
 --[[
@@ -56,27 +66,44 @@ function STRIP_BACK:SetStripesInterval(stripesInterval)
 
 end
 
+function STRIP_BACK:GetStripesInterval()
+    
+    return stripesInterval or dStripesInterval
+
+end
+
 --[[
     angle : num
     return this table
 ]]
-function STRIP_BACK:SetRotate(angle)
+function STRIP_BACK:SetAngle(angle)
 
-    if angle < 0 or angle > 90 then
-        error 'is no correct angle'
-    end
+    local ang = Angle(angle)
+    ang:Normalize()
 
-    self.angle = angle
-
-    self.matrix = Matrix()
-
-    self.matrix:Rotate(Angle(0, angle))
-    self.matrix:Invert() -- особенности UI
-
-    self:calcRotSizes()
-
+    self.angle = ang[1]
     return self
 
+end
+
+function STRIP_BACK:GetAngle()
+   
+    return self.angle or 0
+
+end
+
+function STRIP_BACK:Horizontal()
+
+    self:SetAngle(0)
+    return self
+    
+end
+
+function STRIP_BACK:Vertical()
+
+    self:SetAngle(90)
+    return self
+    
 end
 
 --[[
@@ -84,20 +111,24 @@ end
 ]]
 function STRIP_BACK:Build()
 
-    local w, h = self:calcRectSizes()
-    
-    local rects = {}
+    local w, h = self:GetSize()
+    local angle = self:GetAngle()
+    local stripesInterval = self:GetStripesInterval()
+    local numStripes = self.numStripes
 
-    local nextX, nextY = 0, 0
-
-    for i = 1, self.numStripes, 1 do
+    if angle == 0 or angle == 180 then
         
-        rects[i] = self:createNewRect(w, h, nextX, nextY)
-        nextY = nextY + (self.stripesInterval or dStripesInterval) + h
+        return self:buildHorizontal(w, h, stripesInterval, numStripes)
 
+    elseif angle == 90 or angle == -90 then
+        
+        return self:buildVertical(w, h, stripesInterval, numStripes)
+
+    else
+
+        return self:buildOther(angle, w, h, stripesInterval, numStripes)
+        
     end
-
-    return rects
 
 end
 
@@ -105,85 +136,96 @@ end
     return table : { { [1] = { x = num, y = num }, ect }, etc }
 ]]
 function STRIP_BACK:BuildXY()
-    
-    local rects = {}
 
-    for k, v in ipairs(self:Build()) do
+    local buildRes = self:Build()
+
+    local res = {}
+
+    for k, v in ipairs(buildRes) do
+
+        res[k] = {}
         
-        rects[k] = {}
-
         for k1, v1 in ipairs(v) do
-
-            rects[k][k1] = { x = v1.x, y = v1.y }
+            
+            res[k][k1] = { ['x'] = v1[1], ['y'] = v1[2] }
 
         end
 
     end
 
-    return rects
+    return res
 
 end
 
--- private methods:
+-- private
 
-function STRIP_BACK:calcRectSizes()
+function STRIP_BACK:buildSimple(main, other, stripesInterval, numStripes, isX)
 
-    local hAll = (self.h or dH) - (self.stripesInterval or dStripesInterval) * (self.numStripes - 1)
-    return self.w or dW, hAll / self.numStripes
+    local res = {}
+
+    local mainLength = (main - (numStripes - 1) * stripesInterval) / numStripes
+
+    local startOther, endOther = 0, other
+    local startMain = 0
+
+    for i = 1, numStripes, 1 do
+    
+        local endMain = startMain + mainLength
+
+        if isX then
+
+            res[i] = self:createNewRect(startOther, startMain, endOther, endMain)
+
+        else
+
+            res[i] = self:createNewRect(startMain, startOther, endMain, endOther)
+
+        end
+    
+        startMain = endMain + stripesInterval
+    
+    end
+
+    return res
     
 end
 
-function STRIP_BACK:createNewRect(w, h, x, y)
+function STRIP_BACK:buildHorizontal(w, h, stripesInterval, numStripes)
 
-    -- down-left to up-right; counterclockwise
-    local rect = {
-        [1] = Vector(x, y),
-        [2] = Vector(x + w, y),
-        [3] = Vector(x + w, y + h),
-        [4] = Vector(x, y + h)
+    return self:buildSimple(h, w, stripesInterval, numStripes, true)
+
+end
+
+function STRIP_BACK:buildVertical(w, h, stripesInterval, numStripes)
+
+    return self:buildSimple(w, h, stripesInterval, numStripes)
+    
+end
+
+function STRIP_BACK:buildOther(angle, w, h, stripesInterval, numStripes)
+
+    local res = {}
+
+
+    return res
+    
+end
+
+function STRIP_BACK:createNewRect(x1, y1, x2, y2)
+    
+    return {
+        Vector(x1, y1),
+        Vector(x2, y1),
+        Vector(x2, y2),
+        Vector(x1, y2),
     }
 
-    if self.matrix then
-        
-        for k, v in ipairs(rect) do
-            
-            rect[k] = self.matrix * v
-
-        end
-
-    end
-
-    return rect
-
 end
 
-function STRIP_BACK:calcRotSizes()
+function STRIP_BACK:createNewCenterRect(w, h)
 
-    local w, h = self.w, self.h
-
-    local d = (w * w + h * h) ^ .5
-
-    -- step 1
-
-    local alpha = self.angle
-    local beta = atan(h / w) / pi * 180
-
-    local a = h
-    local b = a / sin(angToRad(alpha + beta))
-
-    local k = d / b
-    local as = a * k
-
-    self.h = as
-
-    -- step 2
-
-    local add = cos(90 - alpha) * h
-    self.w = w + add
-
-    -- step 3
-    -- local x, y = - cos(alpha) * add, - sin(alpha) * add
-    -- self.matrix:Translate(Vector(x, y))
+    local w2, h2 = w / 2, h2
+    return self:createNewRect(-w2, -h2, w2, h2)
 
 end
 

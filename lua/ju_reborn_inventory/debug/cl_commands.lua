@@ -7,6 +7,7 @@ local uiList = {
     'juRebornInventoryCell_C',
     'juRebornInventoryCellContextMenu',
     'juRebornInventoryCellIcon',
+    'juRebornInventoryStripBack',
 }
 
 local uiListAuto = {}
@@ -41,6 +42,7 @@ concommand.Add(testUICommandName, function(ply, cmd, args, argStr)
     end
 
     ju.reborn_inventory.debugPanel = vgui.Create(argStr)
+    print(argStr)
     ju.reborn_inventory.debugPanel:Center()
 
 end, function(arguments) return uiListAuto end)
