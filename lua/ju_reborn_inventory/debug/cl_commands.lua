@@ -11,11 +11,13 @@ local uiList = {
 
 local uiListAuto = {}
 
+local testUICommandName = 'ju_test_ui'
+
 for k, v in ipairs(uiList) do
-    uiListAuto[k] = 'ju_cell_ui' .. ' ' .. v
+    uiListAuto[k] = testUICommandName .. ' ' .. v
 end
 
-concommand.Add('ju_cell_ui', function(ply, cmd, args, argStr)
+concommand.Add(testUICommandName, function(ply, cmd, args, argStr)
     
     if ju.reborn_inventory.debugPanel then
 
@@ -39,7 +41,7 @@ concommand.Add('ju_cell_ui', function(ply, cmd, args, argStr)
 
 end, function(arguments) return uiListAuto end)
 
-concommand.Add('ju_cell_ui_list', function()
+concommand.Add(testUICommandName ..'_list', function()
     
     for k, v in ipairs(uiList) do
         print(v)
